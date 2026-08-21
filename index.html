@@ -312,7 +312,7 @@
       <a href="#skills">Skills</a>
       <a href="#contact">Contact</a>
     </div>
-    <a href="mailto:kingkar.dev01@gmail.com" class="btn btn-ghost" style="padding:8px 16px;font-size:13px;display:inline-flex;align-items:center;gap:7px;">
+    <a href="https://mail.google.com/mail/u/0/#inbox?compose=new" target="_blank" rel="noopener" class="btn btn-ghost" style="padding:8px 16px;font-size:13px;display:inline-flex;align-items:center;gap:7px;">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0;"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg>
       Get in touch
     </a>
@@ -326,7 +326,7 @@
       <h1 class="hero-title" id="typewriter"><span id="tw-prefix"></span><span id="tw-word" class="accent"></span><span class="cursor"></span></h1>
       <p class="hero-sub hero-anim d3">Flutter developer with 3+ years turning product goals into fast, stable, production apps — 9 published on Play Store and App Store for clients across Portugal and Nigeria.</p>
       <div class="hero-ctas hero-anim d4">
-        <a href="mailto:kingkar.dev01@gmail.com" class="btn btn-primary" style="display:inline-flex;align-items:center;gap:7px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0;"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg>Email me</a>
+        <a href="https://mail.google.com/mail/u/0/#inbox?compose=new" target="_blank" rel="noopener" class="btn btn-primary" style="display:inline-flex;align-items:center;gap:7px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0;"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg>Email me</a>
         <a href="https://github.com/kingkardev01" class="btn btn-ghost" target="_blank" rel="noopener">GitHub ↗</a>
         <a href="#projects" class="btn btn-ghost">View work</a>
       </div>
@@ -586,7 +586,7 @@
       <h2>Let's build something.</h2>
       <p>Open to new opportunities — reach out anytime.</p>
       <div class="contact-links">
-        <a href="mailto:kingkar.dev01@gmail.com" class="btn btn-primary" style="display:inline-flex;align-items:center;gap:7px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0;"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg>kingkar.dev01@gmail.com</a>
+        <a href="https://mail.google.com/mail/u/0/#inbox?compose=new" target="_blank" rel="noopener" class="btn btn-primary" style="display:inline-flex;align-items:center;gap:7px;"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:15px;height:15px;flex-shrink:0;"><path d="M4 4h16v16H4z"/><path d="M4 6l8 7 8-7"/></svg>kingkar.dev01@gmail.com</a>
         <a href="https://github.com/kingkardev01" class="btn btn-ghost" target="_blank" rel="noopener">GitHub</a>
         <a href="tel:+8801952317847" class="btn btn-ghost">+880 1952 317847</a>
       </div>
@@ -638,19 +638,23 @@
   }
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var prefixText = 'Kingkar Biswas builds mobile apps that ';
-  var wordText = 'ship.';
+  var sentences = [
+    { prefix: 'Kingkar Biswas builds mobile apps that ', word: 'ship.' },
+    { prefix: 'Turning product ideas into apps that ', word: 'perform.' },
+    { prefix: '9 apps live on Play Store and ', word: 'App Store.' }
+  ];
   var prefixEl = document.getElementById('tw-prefix');
   var wordEl = document.getElementById('tw-word');
 
   if(reduceMotion || !prefixEl){
-    if(prefixEl) prefixEl.textContent = prefixText;
-    if(wordEl) wordEl.textContent = wordText;
+    if(prefixEl) prefixEl.textContent = sentences[0].prefix;
+    if(wordEl) wordEl.textContent = sentences[0].word;
   } else {
     var TYPE_SPEED = 55;
     var DELETE_SPEED = 30;
     var HOLD_FULL = 2200;
     var HOLD_EMPTY = 500;
+    var sIndex = 0;
 
     function typeStep(el, text, i, cb){
       if(i <= text.length){
@@ -669,11 +673,13 @@
       }
     }
     function cycle(){
-      typeStep(prefixEl, prefixText, 0, function(){
-        typeStep(wordEl, wordText, 0, function(){
+      var current = sentences[sIndex];
+      typeStep(prefixEl, current.prefix, 0, function(){
+        typeStep(wordEl, current.word, 0, function(){
           setTimeout(function(){
             deleteStep(wordEl, wordEl.textContent.length, function(){
               deleteStep(prefixEl, prefixEl.textContent.length, function(){
+                sIndex = (sIndex + 1) % sentences.length;
                 setTimeout(cycle, HOLD_EMPTY);
               });
             });
